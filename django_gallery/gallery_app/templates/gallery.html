@@ -13,7 +13,24 @@
 	</head>
 	
 	<body>
-		asdfs
+		
+		<form action="{% url "gallery" %}" method="POST">
+		{% csrf_token %}
+			<input type="text" name="name"/>
+			<input type="submit"/>
+		</form>
+		
+		<hr/>
+		
+		<table>
+			{% for picture in pictures %}
+				<tr>
+					<td>
+						{{ picture.name }}
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
 	</body>
 	
 </html>

@@ -2,8 +2,8 @@ from django.db import models
 
 class Picture(models.Model):
     # change to picture type
-    picture = models.CharField()
+    #picture = models.CharField(max_length=100)
     # do I need this one ?
-    name = models.CharField()
+    name = models.CharField(max_length=100)
     # do I need this one ? change to bool if so
-    grayscale = picture = models.CharField()
+    #grayscale = models.CharField(max_length=100)

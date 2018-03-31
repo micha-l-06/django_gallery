@@ -5,5 +5,6 @@ class Picture(models.Model):
     #picture = models.CharField(max_length=100)
     # do I need this one ?
     name = models.CharField(max_length=100)
+    isGrayscaled = models.BooleanField(default=False)
     # do I need this one ? change to bool if so
     #grayscale = models.CharField(max_length=100)

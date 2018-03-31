@@ -14,10 +14,14 @@
 	
 	<body>
 		
-		<form action="{% url "gallery" %}" method="POST">
+		{% if message %}
+			{{ message }}
+		{% endif %}
+		<form action="{% url "gallery" %}" method="POST" name="newPicture">
 		{% csrf_token %}
-			<input type="text" name="name"/>
-			<input type="submit"/>
+			<input type="text" name="name">
+			<input type="hidden" name="action" value="create">
+			<input type="submit">
 		</form>
 		
 		<hr/>
@@ -27,6 +31,22 @@
 				<tr>
 					<td>
 						{{ picture.name }}
+					</td>
+					<td>
+						<form action="{% url "gallery" %}" method="POST" name="deletePicture">
+							{% csrf_token %}
+							<input type="hidden" name="id" value="{{ picture.id }}">
+							<input type="hidden" name="action" value="delete">
+							<input type="submit" value="Delete">
+						</form>
+					</td>
+					<td>
+						<form action="{% url "gallery" %}" method="POST" name="grayscalePicture">
+							{% csrf_token %}
+							<input type="hidden" name="id" value="{{ picture.id }}">
+							<input type="hidden" name="action" value="grayscale">
+							<input type="submit" value="Grayscale">
+						</form>
 					</td>
 				</tr>
 			{% endfor %}

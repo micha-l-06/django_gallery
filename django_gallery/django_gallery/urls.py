@@ -16,8 +16,9 @@ Including another URLconf
 
 from django.urls import re_path
 from gallery_app.views.GalleryView import GalleryView
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     re_path('^gallery/', GalleryView.as_view(), name='gallery'),
-    re_path('^.*$', GalleryView.as_view(), name='gallery')
+    re_path('^.*$', RedirectView.as_view(pattern_name='gallery', permanent=True))
 ]

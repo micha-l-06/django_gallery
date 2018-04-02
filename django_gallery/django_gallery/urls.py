@@ -17,8 +17,15 @@ Including another URLconf
 from django.urls import re_path
 from gallery_app.views.GalleryView import GalleryView
 from django.views.generic.base import RedirectView
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
-    re_path('^gallery/', GalleryView.as_view(), name='gallery'),
+    re_path('^gallery/', GalleryView.as_view(), name='gallery') 
+]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += [
     re_path('^.*$', RedirectView.as_view(pattern_name='gallery', permanent=True))
 ]

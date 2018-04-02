@@ -13,44 +13,55 @@
 	</head>
 	
 	<body>
+	
+		<section>
 		
-		{% if message %}
-			{{ message }}
-		{% endif %}
-		<form action="{% url "gallery" %}" method="POST" name="newPicture">
-		{% csrf_token %}
-			<input type="text" name="name">
-			<input type="hidden" name="action" value="create">
-			<input type="submit">
-		</form>
+			{% if message %}
+				{{ message }}
+			{% endif %}
+			<form action="{% url "gallery" %}" method="POST" name="newPicture" enctype="multipart/form-data">
+			{% csrf_token %}
+				<input type="file" name="picture">
+				<input type="hidden" name="action" value="create">
+				<input type="submit">
+			</form>
+			
+		</section>
 		
 		<hr/>
 		
-		<table>
-			{% for picture in pictures %}
-				<tr>
-					<td>
-						{{ picture.name }}
-					</td>
-					<td>
-						<form action="{% url "gallery" %}" method="POST" name="deletePicture">
-							{% csrf_token %}
-							<input type="hidden" name="id" value="{{ picture.id }}">
-							<input type="hidden" name="action" value="delete">
-							<input type="submit" value="Delete">
-						</form>
-					</td>
-					<td>
-						<form action="{% url "gallery" %}" method="POST" name="grayscalePicture">
-							{% csrf_token %}
-							<input type="hidden" name="id" value="{{ picture.id }}">
-							<input type="hidden" name="action" value="grayscale">
-							<input type="submit" value="Grayscale">
-						</form>
-					</td>
-				</tr>
-			{% endfor %}
-		</table>
+		<section>
+			<table>
+				{% for picture in pictures %}
+					<tr>
+						<td>
+							<img src="{{ picture.picture.url }}" alt="{{ picture.picture.url }}">
+						</td>
+						<td>
+							{{ picture.picture }}
+						</td>
+						<td>
+							<form action="{% url "gallery" %}" method="POST" name="deletePicture">
+								{% csrf_token %}
+								<input type="hidden" name="id" value="{{ picture.id }}">
+								<input type="hidden" name="action" value="delete">
+								<input type="submit" value="Delete">
+							</form>
+						</td>
+						<td>
+							{% if not picture.isGrayscaled%}
+								<form action="{% url "gallery" %}" method="POST" name="grayscalePicture">
+									{% csrf_token %}
+									<input type="hidden" name="id" value="{{ picture.id }}">
+									<input type="hidden" name="action" value="grayscale">
+									<input type="submit" value="Grayscale">
+								</form>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</section>
 	</body>
 	
 </html>
